@@ -9,6 +9,7 @@ const addNote = (title , body) => {
     //})
     //using find instead of filter, because filter loops over all the array whilst find nethod stops at the first match.
     const duplicateNote = notes.find(note => {return note.title ===title})
+    debugger
 
     //if(duplicateNotes.length === 0 ){
         if(!duplicateNote){//if(duplicateNote===undefined){
