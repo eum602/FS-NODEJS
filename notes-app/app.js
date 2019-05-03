@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const yargs = require('yargs')
+const notes = require('./notes')
 
 // ///////////////////////////////lesson 15 - process.argv///////////////////////////////
 // console.log("*****************PROCESS.ARGV*********************")
@@ -36,8 +37,9 @@ yargs.command({
     },
     handler: argv => {
         //console.log(chalk.green(`Adding a new note ${yargs.argv['title']}`)
-        console.log(chalk.green(`Title: ${argv['title']} \nBody: ${argv.body}`)
-        )}
+        //console.log(chalk.green(`Title: ${argv['title']} \nBody: ${argv.body}`))
+        notes.addNote(argv.title, argv.body)
+        }
 })
 
 //console.log("*remove*")
