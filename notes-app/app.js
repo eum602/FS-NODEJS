@@ -64,17 +64,26 @@ yargs.command({
     command:'list',
     describe: 'list nodes',
     handler: () => {
-        console.log(chalk.magenta('listing nodes')
-    )}
+        notes.listNotes()
+        //console.log(chalk.magenta('listing nodes')
+    }
 })
 
 //console.log("*read*")
 yargs.command({
     command:'read',
     describe: 'read a node',
-    handler: () =>{
-        console.log(chalk.yellow('Reading a node')
-    )}
+    builder: {
+        title: {
+        describe: "Note title",
+        demandOption: true,
+        type:'string'
+        }
+    },
+    handler: argv =>{
+        //console.log(chalk.yellow('Reading a node')
+        notes.readNote(argv.title)
+    }
 })
 
 //console.log(yargs.argv) //if we omit this nothing will be prompted

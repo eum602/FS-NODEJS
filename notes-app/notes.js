@@ -4,11 +4,14 @@ const chalk = require('chalk')
 const getNotes = () => {return "your notes"}
 const addNote = (title , body) => {
     const notes = loadNotes()
-    const duplicateNotes = notes.filter(note=>{
-        return note.title === title
-    })
+    //const duplicateNotes = notes.filter(note=>{
+      //  return note.title === title
+    //})
+    //using find instead of filter, because filter loops over all the array whilst find nethod stops at the first match.
+    const duplicateNote = notes.find(note => {return note.title ===title})
 
-    if(duplicateNotes.length === 0 ){
+    //if(duplicateNotes.length === 0 ){
+        if(!duplicateNote){//if(duplicateNote===undefined){
         notes.push({
             title:title,
             body:body
@@ -16,9 +19,9 @@ const addNote = (title , body) => {
 
         saveNotes(notes)
 
-        console.log('New note added')
+        console.log(chalk.green.inverse('New note added'))
     }else{
-        console.log('Note title taken')
+        console.log(chalk.red.inverse('Note title taken'))
     }    
 }
 
@@ -39,6 +42,24 @@ const removeNote = title => {
     
 }
 
+const listNotes = () => {
+    const notes = loadNotes()
+    for(const note of notes){
+        console.log(chalk.green.inverse(`Title:${note.title} ; Body: ${note.body}`))
+    }
+}
+
+const readNote = title => {
+    const notes = loadNotes()
+    const note = notes.find(note => {return note.title ===title})
+    if(note){
+        console.log(chalk.green.inverse(`Title:${note.title} ; Body: ${note.body}`))
+    }else{
+        console.log(chalk.red.inverse(`Note not found`))
+    }
+    
+}
+
 const saveNotes = notes => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json',dataJSON)
@@ -56,5 +77,7 @@ const loadNotes = () => {
 module.exports = {
     getNotes:getNotes,
     addNote:addNote,
-    removeNote:removeNote
+    removeNote:removeNote,
+    listNotes:listNotes,
+    readNote:readNote
 }
